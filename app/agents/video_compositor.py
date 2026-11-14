@@ -48,14 +48,16 @@ class VideoCompositor:
         is_video = (media_path.suffix.lower() == ".mp4")
 
         if is_video:
-            # Magnates Media Style: Real moving 1080p footage with high-contrast cinematic grade
-            vf = (
-                f"scale={width}:{height}:force_original_aspect_ratio=increase,"
-                f"crop={width}:{height},"
-                f"eq=contrast=1.16:brightness=-0.03:saturation=1.22,"
-                f"vignette=PI/4,"
-                f"fps={fps}"
-            )
+            if "curious" in media_path.name or "vec_clip" in media_path.name:
+                vf = f"scale={width}:{height},fps={fps}"
+            else:
+                vf = (
+                    f"scale={width}:{height}:force_original_aspect_ratio=increase,"
+                    f"crop={width}:{height},"
+                    f"eq=contrast=1.16:brightness=-0.03:saturation=1.22,"
+                    f"vignette=PI/4,"
+                    f"fps={fps}"
+                )
             cmd = [
                 "ffmpeg", "-y",
                 "-stream_loop", "-1",  # Loop clip if voiceover is longer than B-roll clip
@@ -70,9 +72,13 @@ class VideoCompositor:
                 str(output_clip_path)
             ]
         else:
-            # Zack D. Films Style: 3D mannequin snap zoom and kinetic framing
             total_frames = int(duration * fps)
-            if motion == "zoom_in":
+            is_vector_scene = "_vec_scene_" in media_path.name or "curious" in media_path.name
+            
+            if is_vector_scene:
+                # Subtle camera breathe - prevents cropping the top brand HUD or bottom stage tracker
+                vf = f"zoompan=z='min(zoom+0.0003,1.025)':d={total_frames}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={width}x{height}:fps={fps}"
+            elif motion == "zoom_in":
                 # High-impact fast punch-in into organ/muscle
                 vf = f"zoompan=z='min(zoom+0.0035,1.35)':d={total_frames}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={width}x{height}:fps={fps}"
             elif motion == "zoom_out":

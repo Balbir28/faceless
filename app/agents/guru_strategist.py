@@ -54,6 +54,40 @@ class GuruStrategist:
 
         # Curated viral topic banks if user doesn't pass a specific custom topic
         topic_vault = {
+            "curious_leverage": [
+                {
+                    "topic": "$20 → $120,000 With a Lemonade Stand 🍋 (4 Levels of Leverage)",
+                    "hook": "$20 to $120,000 using nothing but a lemonade stand. Here are the 4 levels of leverage most people never find.",
+                    "titles": [
+                        TitleConcept(
+                            title="$20 → $120,000 With a Lemonade Stand 🍋 (4 Levels of Leverage)",
+                            archetype="Curiosity Gap",
+                            predicted_ctr="15.8%",
+                            target_emotion="Business Curiosity & Epiphany"
+                        ),
+                        TitleConcept(
+                            title="How $20 Becomes $120,000 (The 4 Levels of Leverage)",
+                            archetype="High-Stakes Metaphor",
+                            predicted_ctr="14.6%",
+                            target_emotion="Wealth Building"
+                        ),
+                        TitleConcept(
+                            title="Why Working Harder Never Makes You Rich (The Lemonade Secret)",
+                            archetype="Contrarian Take",
+                            predicted_ctr="13.9%",
+                            target_emotion="Mindset Shift"
+                        ),
+                    ],
+                    "thumbnail": ThumbnailConcept(
+                        focal_subject="2D vector motion graphic, cute lemonade stand with glass pitcher and gold coins, hero text $20 -> $120,000 with 3D shadow",
+                        background_elements="Radial indigo spotlight, 4-tier leverage stage tracker, glowing gold coins",
+                        lighting_style="Vibrant clean vector lighting, high-contrast yellow and indigo",
+                        overlay_text="$20 TO $120,000?",
+                        color_palette="Lemon Yellow, Deep Indigo, Crisp White, Emerald Green"
+                    ),
+                    "viral_score": 98,
+                }
+            ],
             "simulation_explainer": [
                 {
                     "topic": "How To Survive A Marathon Doing The Worm",

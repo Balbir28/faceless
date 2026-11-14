@@ -249,23 +249,16 @@ class VisualEngine:
             vec_engine = VectorMotionEngine()
 
             for i, scene in enumerate(scenes):
-                frame_path = TEMP_DIR / f"{session_id}_vec_scene_{scene.scene_number}.png"
-                wallet = getattr(scene, 'wallet_amount', None) or ("$120,000" if i == len(scenes)-1 else f"${20 * (i+1) * 2}")
-                hero = getattr(scene, 'hero_text', None) or ("$20 -> $120,000" if i == 0 else wallet)
-                level_str = getattr(scene, 'level_str', None) or f"LEVEL {min(4, i)}: {['HOOK', 'LABOR', 'CAPITAL', 'SYSTEMS', 'DEALS'][min(4, i)]}"
-                formula = getattr(scene, 'formula_text', None) or scene.on_screen_text
-                active_level = getattr(scene, 'active_level', None) or min(4, max(1, i))
+                clip_path = TEMP_DIR / f"{session_id}_curious_clip_{scene.scene_number}.mp4"
+                dur = getattr(scene, 'estimated_duration', 5.0) or 5.0
 
-                vec_engine.render_scene_frame(
-                    brand_name="THE CURIOUS PLOT",
-                    wallet_amount=wallet,
-                    hero_text=hero,
-                    level_str=level_str,
-                    formula_text=formula,
-                    active_level=active_level,
-                    output_path=frame_path
+                vec_engine.render_animated_scene_clip(
+                    scene_num=scene.scene_number,
+                    duration=dur,
+                    output_path=clip_path,
+                    fps=30
                 )
-                media_paths.append(frame_path)
+                media_paths.append(clip_path)
 
             return media_paths
 

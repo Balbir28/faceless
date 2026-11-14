@@ -11,6 +11,8 @@ import math
 import random
 import wave
 import struct
+import sys
+import shutil
 import subprocess
 from pathlib import Path
 from typing import Dict, Any, Optional, Tuple, List
@@ -40,7 +42,83 @@ class AudioDirector:
         sample_rate = 44100
         total_samples = int(sample_rate * (duration_seconds + 3.0))
 
-        if mood == "clinical_suspense":
+        if mood == "curious_lofi":
+            # High-energy, upbeat acoustic / marimba lofi groove with punchy percussion & walking bass
+            bpm = 118.0
+            beat_sec = 60.0 / bpm
+            subbeat_sec = beat_sec / 2.0
+            chord_roots = [146.83, 196.00, 220.00, 246.94]  # D - G - A - Bm
+
+            with wave.open(str(output_path), "wb") as wav:
+                wav.setnchannels(2)
+                wav.setsampwidth(2)
+                wav.setframerate(sample_rate)
+
+                raw_bytes = bytearray()
+                for i in range(total_samples):
+                    t = i / sample_rate
+                    current_bar = int(t / (beat_sec * 4))
+                    chord_idx = current_bar % len(chord_roots)
+                    f_root = chord_roots[chord_idx]
+
+                    beat_num = int(t / beat_sec) % 4
+                    out = 0.0
+
+                    # 1. Punchy Kick on beats 1 and 3
+                    if beat_num in [0, 2]:
+                        kick_t = (t % beat_sec)
+                        if kick_t < 0.22:
+                            kick_f = 130.0 * math.exp(-kick_t * 22.0) + 48.0
+                            kick_env = math.exp(-kick_t * 14.0)
+                            out += 0.42 * math.sin(2 * math.pi * kick_f * kick_t) * kick_env
+
+                    # 2. Snappy Snare on beats 2 and 4
+                    if beat_num in [1, 3]:
+                        snare_t = (t % beat_sec)
+                        if snare_t < 0.18:
+                            noise = (hash(int(t * 1000000)) % 1000 / 500.0) - 1.0
+                            snare_env = math.exp(-snare_t * 24.0)
+                            tone = math.sin(2 * math.pi * 185.0 * snare_t)
+                            out += (0.30 * noise + 0.16 * tone) * snare_env
+
+                    # 3. Crisp Hi-Hats every 8th note
+                    hat_t = (t % subbeat_sec)
+                    if hat_t < 0.055:
+                        noise = (hash(int(t * 1234567)) % 1000 / 500.0) - 1.0
+                        hat_env = math.exp(-hat_t * 55.0)
+                        out += 0.15 * noise * hat_env
+
+                    # 4. Funky Walking Bassline
+                    bass_env = math.exp(-(t % subbeat_sec) * 5.0)
+                    bass_f = f_root / 2.0
+                    if beat_num == 2:
+                        bass_f *= 1.25
+                    elif beat_num == 3:
+                        bass_f *= 1.5
+                    out += 0.24 * math.sin(2 * math.pi * bass_f * t) * (0.6 + 0.4 * bass_env)
+
+                    # 5. Bouncy Marimba / Kalimba Arpeggios (16th notes)
+                    semi_pos = (t % (subbeat_sec / 2.0))
+                    if semi_pos < 0.12:
+                        marimba_env = math.exp(-semi_pos * 20.0)
+                        arpeg_offsets = [1.0, 1.25, 1.5, 2.0]
+                        note_idx = int(t / (subbeat_sec / 2.0)) % 4
+                        note_f = f_root * arpeg_offsets[note_idx]
+                        marimba = math.sin(2 * math.pi * note_f * t) + 0.28 * math.sin(2 * math.pi * note_f * 3.0 * t)
+                        out += 0.22 * marimba * marimba_env
+
+                    if t < 1.0:
+                        out *= t
+                    elif t > duration_seconds:
+                        out *= max(0.0, (duration_seconds + 3.0 - t) / 3.0)
+
+                    sample_int = int(max(-0.95, min(0.95, out * 0.72)) * 32767)
+                    raw_bytes.extend(struct.pack("<hh", sample_int, sample_int))
+
+                wav.writeframes(raw_bytes)
+            return output_path
+
+        elif mood == "clinical_suspense":
             f_root, f_fifth, f_third = 58.27, 87.31, 69.30  # A# Minor dark clinical
         elif mood == "curious_lofi":
             f_root, f_fifth, f_third = 146.83, 220.0, 185.0  # D Major cheerful bouncy marimba groove
@@ -516,9 +594,13 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
         # 1. Synthesize Speech via Edge-TTS (with offline macOS TTS fallback)
         tts_success = False
+        edge_bin = str(Path(sys.prefix) / "bin" / "edge-tts")
+        if not os.path.exists(edge_bin):
+            edge_bin = shutil.which("edge-tts") or "edge-tts"
+
         try:
             cmd_tts = [
-                "edge-tts",
+                edge_bin,
                 "--voice", voice_id,
                 "--rate", speed_adjustment,
                 "--text", script_text,
