@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApexTube Studio | Autonomous YouTube Monetization Guru</title>
+  <style>
+    :root {
+      --bg-dark: #0a0c10;
+      --bg-card: #12161f;
+      --bg-card-hover: #181e2b;
+      --border: #232a3b;
+      --accent-gold: #fbbf24;
+      --accent-cyan: #06b6d4;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(180deg, #161b26 0%, #0d1117 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 20px;
+      color: #fff;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.4);
+    }
+
+    .brand-info h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #fff;
+    }
+
+    .brand-info p {
+      font-size: 11px;
+      color: var(--accent-gold);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .header-pills {
+      display: flex;
+      gap: 10px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .badge-gold { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-green { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-cyan { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+
+    /* Form Inputs */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    select, input, textarea {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
+
+    /* Niche Grid Selection */
+    .niche-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .niche-option {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .niche-option:hover {
+      border-color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.05);
+    }
+
+    .niche-option.active {
+      border-color: var(--accent-gold);
+      background: rgba(245, 158, 11, 0.08);
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
+    }
+
+    .niche-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .niche-cpm {
+      font-size: 11px;
+      color: var(--accent-green);
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    /* Title Options */
+    .title-box {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .title-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .title-item:hover, .title-item.active {
+      border-color: var(--accent-gold);
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    .title-text {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .title-ctr {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      font-family: var(--font-mono);
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    /* Buttons */
+    .btn {
+      background: #1f2937;
+      color: #fff;
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      background: #374151;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #000;
+      font-weight: 700;
+      border: none;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      transform: translateY(-1px);
+    }
+
+    .btn-large {
+      padding: 14px 24px;
+      font-size: 15px;
+      width: 100%;
+    }
+
+    /* Policy Gauge */
+    .compliance-box {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .meter-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .meter-val {
+      font-size: 32px;
+      font-weight: 900;
+      font-family: var(--font-mono);
+      color: var(--accent-green);
+    }
+
+    .meter-bar-bg {
+      flex: 1;
+      height: 10px;
+      background: #1f2937;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .meter-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+      width: 95%;
+      border-radius: 999px;
+      transition: width 0.4s;
+    }
+
+    .policy-verdict {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #d1d5db;
+    }
+
+    /* Scene Timeline */
+    .scene-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .scene-card {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .scene-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+
+    .scene-narration {
+      font-size: 13px;
+      color: #e5e7eb;
+      line-height: 1.4;
+    }
+
+    .scene-prompt {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* Video Player Preview */
+    .preview-box {
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      min-height: 380px;
+      position: relative;
+    }
+
+    video {
+      max-height: 480px;
+      width: auto;
+      max-width: 100%;
+      border-radius: 6px;
+    }
+
+    .progress-overlay {
+      display: none;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10, 12, 16, 0.92);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 10;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(245, 158, 11, 0.2);
+      border-top-color: var(--accent-gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .progress-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">▶</div>
+      <div class="brand-info">
+        <h1>ApexTube Guru Studio</h1>
+        <p>Autonomous YouTube Monetization Squad</p>
+      </div>
+    </div>
+    <div class="header-pills">
+      <div class="pill"><span class="pill-dot"></span> 100% Free Engine</div>
+      <div class="pill" style="border-color: rgba(245, 158, 11, 0.4);"><span class="pill-dot" style="background:#f59e0b;"></span> 🧬 3D Sim & 🎬 4K B-Roll Active</div>
+      <div class="pill" style="border-color: rgba(16, 185, 129, 0.4);"><span class="pill-dot" style="background:#10b981;"></span> Zero PC Slowdown (threads=2)</div>
+      <div class="pill"><span class="pill-dot"></span> HQ Shorts (1080x1920)</div>
+    </div>
+  </header>
+
+  <!-- Real-Time Channel Growth & Savings Stats -->
+  <section style="max-width: 1400px; width: 100%; margin: 20px auto 0 auto; padding: 0 28px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px;">
+        <div style="font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">HQ SHORTS IN VAULT</div>
+        <div id="statVideos" style="font-size: 22px; font-weight: 900; color: #fff; font-family: var(--font-mono); margin-top: 2px;">--</div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px;">
+        <div style="font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">TARGET AVG CPM</div>
+        <div style="font-size: 22px; font-weight: 900; color: var(--accent-green); font-family: var(--font-mono); margin-top: 2px;">$15.40</div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px;">
+        <div style="font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">FREELANCER COST SAVED</div>
+        <div id="statSaved" style="font-size: 22px; font-weight: 900; color: var(--accent-gold); font-family: var(--font-mono); margin-top: 2px;">--</div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px;">
+        <div style="font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">OUT-OF-POCKET EXPENSE</div>
+        <div style="font-size: 22px; font-weight: 900; color: var(--accent-cyan); font-family: var(--font-mono); margin-top: 2px;">$0.00 FREE</div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <!-- Left Column: Strategy & Scripting -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+      
+      <!-- Card 1: Guru Strategy & Niche Selection -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🧠 1. Guru Strategy & High-CPM Niche</div>
+          <span class="badge badge-gold" id="currentCpmBadge">CPM $9 - $17.50</span>
+        </div>
+
+        <div class="form-group">
+          <label>Select High-Leverage Niche</label>
+          <div class="niche-grid" id="nicheGrid">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Channel Brand & Identity Suggestion -->
+        <div id="brandBanner" style="background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.22); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <span style="font-size: 10px; color: var(--accent-gold); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">PROPOSED CHANNEL BRAND:</span>
+              <h2 id="brandChannelName" style="font-size: 16px; font-weight: 800; color: #fff; margin-top: 2px;">Cognitive Vault</h2>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-size: 10px; color: var(--text-muted); font-weight: 600;">HANDLE:</span>
+              <div id="brandHandle" style="font-size: 12px; font-weight: 700; color: var(--accent-cyan); font-family: var(--font-mono);">@CognitiveVault</div>
+            </div>
+          </div>
+          <p id="brandTagline" style="font-size: 11px; color: #d1d5db; line-height: 1.4;"></p>
+          <div style="display: flex; gap: 6px; margin-top: 2px;">
+            <button class="btn" style="font-size: 10px; padding: 3px 8px;" onclick="copyChannelBio()">📋 Copy Channel Bio</button>
+            <button class="btn" style="font-size: 10px; padding: 3px 8px;" onclick="copyAvatarPrompt()">🎨 Logo Prompt</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Custom Topic / Angle (Optional)</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="topicInput" placeholder="Leave empty for viral preset or enter topic..." style="flex: 1;">
+            <button class="btn" id="generateStrategyBtn">Optimize Topic</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>High-CTR Title Archetypes (Select Primary)</label>
+          <div class="title-box" id="titleList">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: YPP Monetization & Policy Guardian -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🛡️ 2. Policy Guardian & YPP Monetization Audit</div>
+          <span class="badge badge-green" id="riskBadge">LOW RISK</span>
+        </div>
+
+        <div class="compliance-box">
+          <div class="meter-container">
+            <div class="meter-val" id="scoreVal">95%</div>
+            <div style="flex: 1;">
+              <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; color: var(--text-muted);">
+                <span>YPP COMPLIANCE RATING</span>
+                <span id="scoreText">SAFE FOR MONETIZATION</span>
+              </div>
+              <div class="meter-bar-bg">
+                <div class="meter-bar-fill" id="scoreBar" style="width: 95%;"></div>
+              </div>
+            </div>
+          </div>
+          <p class="policy-verdict" id="policyVerdict">
+            ✅ APPROVED FOR MONETIZATION: Video features original educational synthesis, compliant narrative pacing, and avoids reused content or robotic repetition.
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 10px; font-size: 11px; color: var(--text-muted);">
+          <span>✓ Reused Content Guard</span>
+          <span>✓ Repetitious Filter Passed</span>
+          <span>✓ Synthetic Media Tagged</span>
+        </div>
+      </div>
+
+      <!-- Card 3: Retention Script Engine -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">✍️ 3. Retention-Engineered Script Breakdown</div>
+          <span class="badge badge-cyan" id="scriptStats">5 Scenes • 45s</span>
+        </div>
+
+        <div class="scene-list" id="sceneList">
+          <!-- Dynamically populated scenes -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Production & Publishing -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+
+      <!-- Card 4: Audio & Video Studio Controls -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">🎙️ 4. Voiceover & Production Engine</div>
+          <span class="badge badge-gold">100% Free Engine</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label>Neural Voice Persona</label>
+            <select id="voiceSelect">
+              <option value="en-US-ChristopherNeural" selected>Christopher (Deep Storyteller)</option>
+              <option value="en-US-GuyNeural">Guy (Modern Explainer / Energetic)</option>
+              <option value="en-US-EricNeural">Eric (Serious / High-Stakes)</option>
+              <option value="en-US-AvaNeural">Ava (Warm & Captivating)</option>
+              <option value="en-US-EmmaNeural">Emma (Intellectual / Refined)</option>
+              <option value="en-GB-RyanNeural">Ryan (British Drama / Suspense)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Video Format (HQ Shorts Only)</label>
+            <div style="background: #0d1117; border: 1px solid var(--accent-gold); border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between;">
+              <span style="font-size: 13px; font-weight: 700; color: #fff;">📱 9:16 Vertical HD</span>
+              <span style="font-size: 10px; font-weight: 800; color: #000; background: var(--accent-gold); padding: 2px 6px; border-radius: 4px;">HQ SHORTS ONLY</span>
+            </div>
+            <input type="hidden" id="formatSelect" value="shorts">
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-large" id="produceBtn">
+          ⚡ Produce High-Quality Video (1-Click)
+        </button>
+      </div>
+
+      <!-- Card 5: Finished Player & Publishing Hub -->
+      <div class="card" style="flex: 1;">
+        <div class="card-header">
+          <div class="card-title">🎬 5. Master Video Player & YouTube Publisher</div>
+          <span class="badge badge-green" id="renderStatusBadge">Ready</span>
+        </div>
+
+        <div class="preview-box">
+          <div class="progress-overlay" id="progressOverlay">
+            <div class="spinner"></div>
+            <div class="progress-text" id="progressStep">Initializing Production Pipeline...</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Voicing • Curating Visuals • Burning Subtitles</div>
+          </div>
+          <video id="videoPlayer" controls style="display: none;"></video>
+          <div id="placeholderText" style="text-align: center; color: var(--text-muted); padding: 40px;">
+            <div style="font-size: 48px; margin-bottom: 12px;">📽️</div>
+            <p style="font-size: 15px; font-weight: 600; color: #fff;">No Video Rendered Yet</p>
+            <p style="font-size: 12px; margin-top: 4px;">Click the button above to assemble your first viral video.</p>
+          </div>
+        </div>
+
+        <!-- Publishing Metadata Accordion -->
+        <div class="form-group" style="margin-top: 10px;">
+          <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('titleTab')">YouTube Metadata</button>
+            <button class="tab-btn" onclick="switchTab('crossTab')">📱 IG Reels & TikTok</button>
+            <button class="tab-btn" onclick="switchTab('tagsTab')">SEO Tags (30)</button>
+            <button class="tab-btn" onclick="switchTab('uploadTab')">100% Free Publishing</button>
+          </div>
+
+          <div id="titleTab" class="tab-content" style="display: block; margin-top: 8px;">
+            <div style="display: flex; gap: 6px; margin-bottom: 6px;">
+              <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="copyText('titleInput')">📋 Copy Title</button>
+              <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="copyText('descOutput')">📋 Copy Description</button>
+            </div>
+            <input type="text" id="titleInput" readonly placeholder="Title will appear here..." style="margin-bottom: 6px;">
+            <textarea id="descOutput" rows="4" readonly placeholder="SEO Description will appear here..."></textarea>
+          </div>
+
+          <div id="crossTab" class="tab-content" style="display: none; margin-top: 8px;">
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="font-size: 12px; font-weight: 700; color: #f472b6;">📸 Instagram Reels Caption</span>
+                  <button class="btn" style="padding: 3px 8px; font-size: 10px;" onclick="copyText('reelsOutput')">📋 Copy Reels</button>
+                </div>
+                <textarea id="reelsOutput" rows="3" readonly placeholder="Instagram Reels caption with hooks & hashtags..."></textarea>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <span style="font-size: 12px; font-weight: 700; color: #22d3ee;">🎵 TikTok Caption & Tags</span>
+                  <button class="btn" style="padding: 3px 8px; font-size: 10px;" onclick="copyText('tiktokOutput')">📋 Copy TikTok</button>
+                </div>
+                <textarea id="tiktokOutput" rows="2" readonly placeholder="TikTok viral hook caption..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div id="tagsTab" class="tab-content" style="display: none; margin-top: 8px;">
+            <div style="margin-bottom: 6px;">
+              <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="copyText('tagsOutput')">📋 Copy All 30 Tags</button>
+            </div>
+            <textarea id="tagsOutput" rows="3" readonly placeholder="High-volume tags will appear here..."></textarea>
+          </div>
+
+          <div id="uploadTab" class="tab-content" style="display: none; margin-top: 8px;">
+            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 12px; margin-bottom: 10px;">
+              <div style="font-size: 12px; font-weight: 700; color: #34d399; margin-bottom: 4px;">✨ 100% Free Publishing (Zero Subscriptions Required)</div>
+              <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+                Choose whichever option fits your workflow best. Neither requires paying for third-party automation tools!
+              </p>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <!-- Free Option A -->
+              <div style="background: #0d1117; border: 1px solid var(--border); border-radius: 6px; padding: 10px; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                  <div style="font-size: 12px; font-weight: 700; color: #fff;">Option 1: Direct YouTube Studio Upload (0 Config)</div>
+                  <div style="font-size: 11px; color: var(--text-muted);">Opens YouTube Studio upload dialogue with Title auto-copied to your clipboard.</div>
+                </div>
+                <button class="btn btn-primary" style="padding: 6px 14px; font-size: 12px;" onclick="openYouTubeStudio()">
+                  🚀 Open Studio & Upload
+                </button>
+              </div>
+
+              <!-- Free Option B -->
+              <div style="background: #0d1117; border: 1px solid var(--border); border-radius: 6px; padding: 10px;">
+                <div style="font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 4px;">Option 2: Automated Background API Upload (Google Free Quota)</div>
+                <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">
+                  Google gives <strong>10,000 free quota units/day</strong> for the official YouTube Data API v3 (up to 6 automated uploads/day forever free).
+                </p>
+                <div style="display: flex; gap: 8px;">
+                  <button class="btn" style="flex: 1; font-size: 12px;" id="apiPublishBtn" onclick="runApiPublish()">
+                    🤖 1-Click Upload via Free API
+                  </button>
+                  <button class="btn" style="font-size: 12px;" onclick="copyUploadCommand()">
+                    📋 Copy Terminal Command
+                  </button>
+                </div>
+                <p id="publishResult" style="font-size: 11px; margin-top: 6px; display: none;"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 6px;">
+          <a id="downloadVideoBtn" class="btn" style="flex: 1; text-decoration: none; display: none;" download>
+            ⬇️ Download MP4 Video
+          </a>
+          <a id="downloadThumbBtn" class="btn" style="flex: 1; text-decoration: none; display: none;" download>
+            🖼️ Download Thumbnail
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Full-Width Video Vault & Library -->
+  <section style="max-width: 1400px; width: 100%; margin: 0 auto 40px auto; padding: 0 28px;">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">📂 Video Vault & Channel Library</div>
+        <button class="btn" style="font-size: 11px; padding: 4px 10px;" onclick="loadGallery()">🔄 Refresh Library</button>
+      </div>
+      <div id="galleryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;">
+        <!-- Populated via loadGallery() -->
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let currentNiche = 'curious_leverage';
+    let currentStrategy = null;
+    let currentScript = null;
+    let currentSessionId = null;
+    let currentUploadScript = null;
+    let currentBrand = null;
+
+    async function loadBrand(niche) {
+      try {
+        const res = await fetch(`/api/brand/${niche}`);
+        currentBrand = await res.json();
+        document.getElementById('brandChannelName').innerText = currentBrand.primary_name;
+        document.getElementById('brandHandle').innerText = currentBrand.suggested_handles[0] || `@${currentBrand.primary_name.replace(/\s+/g, '')}`;
+        document.getElementById('brandTagline').innerText = `"${currentBrand.channel_tagline}"`;
+      } catch (e) {
+        console.error("Failed to load brand:", e);
+      }
+    }
+
+    function copyChannelBio() {
+      if (currentBrand && currentBrand.channel_about_bio) {
+        navigator.clipboard.writeText(currentBrand.channel_about_bio);
+        const btn = event.target;
+        btn.innerText = "✅ Bio Copied!";
+        setTimeout(() => { btn.innerText = "📋 Copy Channel Bio"; }, 1800);
+      }
+    }
+
+    function copyAvatarPrompt() {
+      if (currentBrand && currentBrand.profile_avatar_prompt) {
+        navigator.clipboard.writeText(currentBrand.profile_avatar_prompt);
+        const btn = event.target;
+        btn.innerText = "✅ Prompt Copied!";
+        setTimeout(() => { btn.innerText = "🎨 Logo Prompt"; }, 1800);
+      }
+    }
+
+    function copyText(elemId) {
+      const elem = document.getElementById(elemId);
+      if (elem) {
+        elem.select();
+        navigator.clipboard.writeText(elem.value);
+        const originalVal = elem.value;
+        const btn = event.target;
+        const origBtnText = btn.innerText;
+        btn.innerText = "✅ Copied!";
+        setTimeout(() => { btn.innerText = origBtnText; }, 1800);
+      }
+    }
+
+    function openYouTubeStudio() {
+      // Copy title to clipboard automatically for convenient paste
+      const titleElem = document.getElementById('titleInput');
+      if (titleElem && titleElem.value) {
+        navigator.clipboard.writeText(titleElem.value);
+      }
+      window.open('https://studio.youtube.com/channel/UC/videos/upload?d=pt', '_blank');
+    }
+
+    function copyUploadCommand() {
+      if (currentUploadScript) {
+        navigator.clipboard.writeText(`python "${currentUploadScript}"`);
+        const btn = event.target;
+        btn.innerText = "✅ Command Copied!";
+        setTimeout(() => { btn.innerText = "📋 Copy Terminal Command"; }, 1800);
+      } else {
+        alert("Please generate a video first!");
+      }
+    }
+
+    async function runApiPublish() {
+      if (!currentSessionId) {
+        alert("Please generate a video first!");
+        return;
+      }
+      const pResult = document.getElementById('publishResult');
+      pResult.style.display = 'block';
+      pResult.style.color = '#fbbf24';
+      pResult.innerText = "⏳ Initiating 100% Free YouTube API upload...";
+
+      try {
+        const res = await fetch('/api/publish', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session_id: currentSessionId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          pResult.style.color = '#34d399';
+          pResult.innerText = "✅ Video uploaded to YouTube successfully for FREE!";
+        } else {
+          pResult.style.color = '#f87171';
+          pResult.innerText = data.message || data.error;
+        }
+      } catch (e) {
+        pResult.style.color = '#f87171';
+        pResult.innerText = "Publishing error: " + e.message;
+      }
+    }
+
+    // Load Niches on Mount
+    async function loadNiches() {
+      const res = await fetch('/api/niches');
+      const niches = await res.json();
+      const grid = document.getElementById('nicheGrid');
+      grid.innerHTML = '';
+
+      for (const [key, data] of Object.entries(niches)) {
+        const div = document.createElement('div');
+        div.className = `niche-option ${key === currentNiche ? 'active' : ''}`;
+        div.onclick = () => selectNiche(key, data);
+        div.innerHTML = `
+          <div class="niche-name">${data.name}</div>
+          <div class="niche-cpm">CPM: ${data.cpm_range}</div>
+        `;
+        grid.appendChild(div);
+      }
+
+      await loadStrategy();
+    }
+
+    function selectNiche(nicheKey, data) {
+      currentNiche = nicheKey;
+      document.querySelectorAll('.niche-option').forEach(el => el.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      document.getElementById('currentCpmBadge').innerText = `CPM ${data.cpm_range}`;
+      loadBrand(nicheKey);
+      loadStrategy();
+    }
+
+    async function loadStrategy() {
+      const topic = document.getElementById('topicInput').value;
+      const res = await fetch('/api/strategy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ niche: currentNiche, custom_topic: topic })
+      });
+      currentStrategy = await res.json();
+
+      // Render Titles
+      const titleList = document.getElementById('titleList');
+      titleList.innerHTML = '';
+      currentStrategy.titles.forEach((t, i) => {
+        const div = document.createElement('div');
+        div.className = `title-item ${i === 0 ? 'active' : ''}`;
+        div.onclick = () => {
+          document.querySelectorAll('.title-item').forEach(el => el.classList.remove('active'));
+          div.classList.add('active');
+          currentStrategy.primary_title = t.title;
+          loadScript();
+        };
+        div.innerHTML = `
+          <div class="title-text">${t.title}</div>
+          <div class="title-ctr">CTR: ${t.predicted_ctr}</div>
+        `;
+        titleList.appendChild(div);
+      });
+
+      await loadScript();
+    }
+
+    async function loadScript() {
+      const res = await fetch('/api/script', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          niche: currentNiche,
+          topic: currentStrategy.topic,
+          title: currentStrategy.primary_title,
+          format: document.getElementById('formatSelect').value
+        })
+      });
+      currentScript = await res.json();
+
+      // Update script scenes
+      const sceneList = document.getElementById('sceneList');
+      sceneList.innerHTML = '';
+      currentScript.scenes.forEach(s => {
+        const card = document.createElement('div');
+        card.className = 'scene-card';
+        card.innerHTML = `
+          <div class="scene-head">
+            <span>SCENE ${s.scene_number} • ${s.on_screen_text}</span>
+            <span>${s.estimated_duration.toFixed(1)}s • ${s.camera_motion.toUpperCase()}</span>
+          </div>
+          <div class="scene-narration">"${s.narration}"</div>
+          <div class="scene-prompt">Visual: ${s.visual_prompt}</div>
+        `;
+        sceneList.appendChild(card);
+      });
+
+      document.getElementById('scriptStats').innerText = `${currentScript.scenes.length} Scenes • ${currentScript.total_words} Words • ${currentScript.estimated_duration_sec.toFixed(0)}s`;
+
+      // Run Compliance Audit
+      await runAudit();
+    }
+
+    async function runAudit() {
+      const res = await fetch('/api/audit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: currentStrategy.primary_title,
+          script_text: currentScript.full_narration,
+          niche: currentNiche
+        })
+      });
+      const audit = await res.json();
+      document.getElementById('scoreVal').innerText = `${audit.compliance_score}%`;
+      document.getElementById('scoreBar').style.width = `${audit.compliance_score}%`;
+      document.getElementById('policyVerdict').innerText = audit.monetization_verdict;
+      document.getElementById('riskBadge').innerText = `${audit.risk_level} RISK`;
+      document.getElementById('riskBadge').className = audit.risk_level === 'LOW' ? 'badge badge-green' : 'badge badge-gold';
+    }
+
+    // Produce Video
+    document.getElementById('produceBtn').onclick = async () => {
+      const overlay = document.getElementById('progressOverlay');
+      const stepText = document.getElementById('progressStep');
+      const produceBtn = document.getElementById('produceBtn');
+
+      overlay.style.display = 'flex';
+      produceBtn.disabled = true;
+
+      const steps = [
+        "1/5 Synthesizing Neural Voiceover...",
+        "2/5 Extracting Subtitle Timings...",
+        "3/5 Generating High-Res Cinematic Visuals...",
+        "4/5 Mixing Normalized Audio & Ducking...",
+        "5/5 Burning Dynamic Subtitles & Exporting MP4..."
+      ];
+      let stepIdx = 0;
+      const interval = setInterval(() => {
+        stepIdx = (stepIdx + 1) % steps.length;
+        stepText.innerText = steps[stepIdx];
+      }, 4000);
+
+      try {
+        const res = await fetch('/api/produce', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            niche: currentNiche,
+            topic: currentStrategy.topic,
+            voice_id: document.getElementById('voiceSelect').value,
+            format: document.getElementById('formatSelect').value
+          })
+        });
+
+        clearInterval(interval);
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.detail || "Server production error");
+        }
+
+        // Update player
+        const player = document.getElementById('videoPlayer');
+        const placeholder = document.getElementById('placeholderText');
+        placeholder.style.display = 'none';
+        player.style.display = 'block';
+        player.src = data.video_url;
+        player.play();
+
+        currentSessionId = data.session_id;
+        currentUploadScript = data.upload_script_path;
+
+        // Update SEO outputs safely
+        if (data.seo_metadata) {
+          document.getElementById('titleInput').value = data.seo_metadata.title || '';
+          document.getElementById('descOutput').value = data.seo_metadata.description || '';
+          document.getElementById('tagsOutput').value = (data.seo_metadata.tags || []).join(', ');
+        }
+        document.getElementById('uploadScriptPath').innerText = data.upload_script_path || '';
+
+        // Download links
+        const dlVid = document.getElementById('downloadVideoBtn');
+        dlVid.href = data.video_url;
+        dlVid.style.display = 'inline-flex';
+
+        const dlThumb = document.getElementById('downloadThumbBtn');
+        dlThumb.href = data.thumbnail_url;
+        dlThumb.style.display = 'inline-flex';
+
+        if (data.cross_platform) {
+          document.getElementById('reelsOutput').value = data.cross_platform.instagram_reels.caption;
+          document.getElementById('tiktokOutput').value = data.cross_platform.tiktok.caption;
+        }
+
+        document.getElementById('renderStatusBadge').innerText = `Finished in ${data.production_time_sec}s (${data.file_size_mb} MB)`;
+        await loadGallery();
+        await loadAnalytics();
+      } catch (err) {
+        clearInterval(interval);
+        alert('Production failed: ' + err.message);
+      } finally {
+        overlay.style.display = 'none';
+        produceBtn.disabled = false;
+      }
+    };
+
+    document.getElementById('generateStrategyBtn').onclick = loadStrategy;
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).style.display = 'block';
+      event.currentTarget.classList.add('active');
+    }
+
+    async function loadGallery() {
+      try {
+        const res = await fetch('/api/gallery');
+        const videos = await res.json();
+        const grid = document.getElementById('galleryGrid');
+        grid.innerHTML = '';
+        if (!videos || videos.length === 0) {
+          grid.innerHTML = '<p style="color: var(--text-muted); font-size: 13px; grid-column: 1/-1; padding: 20px 0;">No videos in vault yet. Produce your first video above!</p>';
+          return;
+        }
+        videos.forEach(v => {
+          const card = document.createElement('div');
+          card.style = "background: #0d1117; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column;";
+          card.innerHTML = `
+            <img src="${v.thumbnail_url || ''}" style="width: 100%; height: 140px; object-fit: cover; background: #000;" onerror="this.style.display='none'">
+            <div style="padding: 12px; display: flex; flex-direction: column; gap: 8px; flex: 1;">
+              <div style="font-size: 13px; font-weight: 700; color: #fff; line-height: 1.3;">${v.title}</div>
+              <div style="font-size: 11px; color: var(--text-muted);">${v.file_size_mb} MB • Ready</div>
+              <div style="display: flex; gap: 6px; margin-top: auto;">
+                <button class="btn" style="flex: 1; font-size: 11px; padding: 6px;" onclick="playGalleryVideo('${v.video_url}')">▶ Watch</button>
+                <a class="btn" style="font-size: 11px; padding: 6px 8px; text-decoration: none;" href="${v.video_url}" download title="Download MP4">⬇️ MP4</a>
+                <a class="btn btn-primary" style="font-size: 11px; padding: 6px 8px; text-decoration: none;" href="${v.bundle_url}" download title="Download All Assets (.zip)">📦 ZIP</a>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (e) {
+        console.error("Failed to load gallery:", e);
+      }
+    }
+
+    function playGalleryVideo(url) {
+      const player = document.getElementById('videoPlayer');
+      const placeholder = document.getElementById('placeholderText');
+      placeholder.style.display = 'none';
+      player.style.display = 'block';
+      player.src = url;
+      player.play();
+      window.scrollTo({ top: 300, behavior: 'smooth' });
+    }
+
+    async function loadAnalytics() {
+      try {
+        const res = await fetch('/api/analytics');
+        const data = await res.json();
+        document.getElementById('statVideos').innerText = data.total_videos;
+        document.getElementById('statSaved').innerText = data.freelancer_cost_saved;
+      } catch (e) {
+        console.error("Failed to load analytics:", e);
+      }
+    }
+
+    window.onload = () => {
+      loadNiches();
+      loadGallery();
+      loadAnalytics();
+    };
+  </script>
+</body>
+</html>
+

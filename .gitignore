@@ -1,0 +1,22 @@
+# Python & Environment
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# OS Artifacts
+.DS_Store
+Thumbs.db
+
+# Media & Temp Renders (Avoid pushing gigabytes of video to git)
+temp/
+data/stock_video_cache/
+output/*
+!output/.gitkeep
+
+# Sensitive Credentials
+client_secret.json
+token.json

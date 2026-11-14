@@ -1,0 +1,76 @@
+{
+  "last_updated": "2026-11-09T13:46:30.974949",
+  "scheduled_videos": 7,
+  "rendered_videos": 0,
+  "target_average_cpm": "$15.40",
+  "projected_revenue": {
+    "at_100k_views": "$1,200 - $2,200",
+    "at_500k_views": "$6,000 - $11,000",
+    "at_1m_views": "$12,000 - $22,000"
+  },
+  "schedule": [
+    {
+      "day": 1,
+      "scheduled_time": "2026-11-09T12:00:00",
+      "niche_key": "dark_psychology",
+      "niche_name": "Dark Psychology & Human Behavior",
+      "estimated_cpm": "$9.00 - $17.50",
+      "suggested_title": "The 3-Second Eye Trick That Exposes Any Liar",
+      "status": "QUEUED"
+    },
+    {
+      "day": 2,
+      "scheduled_time": "2026-11-10T12:00:00",
+      "niche_key": "wealth_secrets",
+      "niche_name": "Hidden Wealth & Financial Case Studies",
+      "estimated_cpm": "$18.00 - $38.00",
+      "suggested_title": "The 3-Word Rule Billionaires Use To Pay 0% Tax",
+      "status": "QUEUED"
+    },
+    {
+      "day": 3,
+      "scheduled_time": "2026-11-11T12:00:00",
+      "niche_key": "modern_stoicism",
+      "niche_name": "Modern Stoicism & High Performance",
+      "estimated_cpm": "$8.00 - $16.00",
+      "suggested_title": "Marcus Aurelius: The Secret To Being Untouchable",
+      "status": "QUEUED"
+    },
+    {
+      "day": 4,
+      "scheduled_time": "2026-11-12T12:00:00",
+      "niche_key": "future_tech",
+      "niche_name": "AI Frontiers & Tech Disruptions",
+      "estimated_cpm": "$12.00 - $26.00",
+      "suggested_title": "The 1-Person Billion Dollar Company Is Already Here",
+      "status": "QUEUED"
+    },
+    {
+      "day": 5,
+      "scheduled_time": "2026-11-13T12:00:00",
+      "niche_key": "unsolved_mysteries",
+      "niche_name": "Unsolved Bizarre Mysteries & Paradoxes",
+      "estimated_cpm": "$7.00 - $14.50",
+      "suggested_title": "The 72-Second Deep Space Signal That Terrified NASA",
+      "status": "QUEUED"
+    },
+    {
+      "day": 6,
+      "scheduled_time": "2026-11-14T12:00:00",
+      "niche_key": "dark_psychology",
+      "niche_name": "Dark Psychology & Human Behavior",
+      "estimated_cpm": "$9.00 - $17.50",
+      "suggested_title": "The 3-Second Eye Trick That Exposes Any Liar",
+      "status": "QUEUED"
+    },
+    {
+      "day": 7,
+      "scheduled_time": "2026-11-15T12:00:00",
+      "niche_key": "wealth_secrets",
+      "niche_name": "Hidden Wealth & Financial Case Studies",
+      "estimated_cpm": "$18.00 - $38.00",
+      "suggested_title": "The 3-Word Rule Billionaires Use To Pay 0% Tax",
+      "status": "QUEUED"
+    }
+  ]
+}
